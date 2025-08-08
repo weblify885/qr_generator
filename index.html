@@ -11,8 +11,8 @@
     <!-- Social Media Meta Tags -->
     <meta property="og:title" content="Free QR Code Generator - Create Custom QR Codes Instantly">
     <meta property="og:description" content="Instantly generate QR codes for URLs, text, and more. Easy, free, and no sign-up required.">
-    <meta property="og:image" content="https://freeqrcodemaker.netlify.app/icon.png">
-    <meta property="og:url" content="Instantly generate QR codes for URLs, text, and more. Easy, free, and no sign-up required.">
+    <meta property="og:image" content="https://freeqrcodemaker.netlify.app/og-image.png">
+    <meta property="og:url" content="https://freeqrcodemaker.netlify.app/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -21,8 +21,15 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .dark body { background-color: #111827; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f9fafb;
+            background-image: linear-gradient(to top right, #eef2ff, #fdf2f8);
+        }
+        .dark body { 
+            background-color: #111827;
+            background-image: linear-gradient(to top right, #1e1b4b, #261930);
+        }
         
         /* Page transition styles */
         .page-section { display: none; animation: fadeIn 0.5s ease-in-out; }
@@ -38,7 +45,7 @@
         .content-section strong { @apply font-semibold text-gray-900 dark:text-white; }
         
         /* Blog card styles */
-        .blog-card { @apply bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden transform hover:-translate-y-2 transition-all duration-300; }
+        .blog-card { @apply bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300; }
         .blog-card img { @apply w-full h-48 object-cover; }
 
         /* FAQ Accordion styles */
@@ -66,7 +73,7 @@
 <body>
 
     <!-- Header & Navigation -->
-    <header class="bg-white/80 dark:bg-gray-800/80 shadow-sm fixed w-full top-0 z-50 backdrop-blur-sm">
+    <header class="bg-white/80 dark:bg-gray-900/80 shadow-sm fixed w-full top-0 z-50 backdrop-blur-sm">
         <nav class="container mx-auto px-4 lg:px-6 py-4 flex justify-between items-center">
             <a href="#home" class="nav-trigger flex items-center space-x-2">
                 <!-- New SVG Logo -->
@@ -89,6 +96,7 @@
                 </svg>
                 <span class="text-xl font-bold text-gray-800 dark:text-white tracking-tight">FreeQRCode<span class="text-indigo-600">Maker</span></span>
             </a>
+            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
                 <a href="#home" class="nav-link nav-trigger">Home</a>
                 <a href="#blog" class="nav-link nav-trigger">Blog</a>
@@ -96,7 +104,24 @@
                 <a href="#about" class="nav-link nav-trigger">About</a>
                 <a href="#contact" class="nav-link nav-trigger">Contact</a>
             </div>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 dark:text-white">
+                    <svg id="menu-open-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg id="menu-close-icon" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
         </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg">
+            <div class="flex flex-col items-center space-y-4 py-8">
+                <a href="#home" class="nav-link nav-trigger text-lg">Home</a>
+                <a href="#blog" class="nav-link nav-trigger text-lg">Blog</a>
+                <a href="#faq" class="nav-link nav-trigger text-lg">FAQ</a>
+                <a href="#about" class="nav-link nav-trigger text-lg">About</a>
+                <a href="#contact" class="nav-link nav-trigger text-lg">Contact</a>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content Area -->
@@ -105,7 +130,7 @@
         <!-- PAGE: Home / Generator Tool -->
         <section id="home" class="page-section">
             <div class="flex items-center justify-center py-8">
-                <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 space-y-6">
+                <div class="w-full max-w-md bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl shadow-2xl p-8 space-y-6">
                     <div class="text-center">
                         <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Free QR Code Generator</h1>
                         <p class="text-gray-500 dark:text-gray-400 mt-2">Enter text or a URL to create your QR code instantly.</p>
@@ -115,9 +140,9 @@
                             <label for="qr-text" class="text-sm font-medium text-gray-700 dark:text-gray-300">Your Text or URL</label>
                             <input type="text" id="qr-text" class="mt-1 block w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         </div>
-                        <button id="generate-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Generate QR Code</button>
+                        <button id="generate-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-105">Generate QR Code</button>
                     </div>
-                    <div id="qrcode-container" class="hidden flex flex-col items-center justify-center space-y-4 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+                    <div id="qrcode-container" class="hidden flex flex-col items-center justify-center space-y-4 p-6 bg-gray-50/50 dark:bg-gray-700/50 rounded-xl">
                          <div id="qrcode-display" class="p-4 bg-white rounded-lg shadow-inner"></div>
                          <p id="qrcode-message" class="text-sm text-green-600 dark:text-green-400 font-medium">QR Code Generated!</p>
                          <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -184,125 +209,30 @@
             </div>
         </section>
 
-        <!-- PAGE: Blog Post 1 -->
-        <section id="blog-post-1" class="page-section py-16 content-section max-w-3xl mx-auto">
-            <a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a>
-            <h2 class="text-center">5 Creative Ways to Use QR Codes for Your Small Business</h2>
-            <p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p>
-            <img src="https://placehold.co/800x400/6366f1/ffffff?text=Business+Strategy" alt="Business strategy visuals" class="rounded-lg mb-8">
-            <p>QR codes are more than just a link to your website. They are a powerful bridge between the physical and digital worlds. Here are five creative ways your small business can use them to engage customers and boost sales.</p>
-            <ul>
-                <li><strong>Link to a Video Tutorial:</strong> On product packaging, add a QR code that links to a video showing how to use or assemble the product. This adds immense value and reduces customer support queries.</li>
-                <li><strong>Exclusive Discounts:</strong> Place a QR code on your flyers or in-store signage that offers a special discount. This rewards customers for their visit and encourages immediate purchases.</li>
-                <li><strong>Gather Feedback:</strong> Put a QR code on receipts that links to a simple feedback form. Offer a small incentive, like 10% off their next purchase, for completing the survey.</li>
-                <li><strong>Wi-Fi Access:</strong> If you run a café, restaurant, or any place with a waiting area, a QR code that grants instant Wi-Fi access is a huge convenience for your customers.</li>
-                <li><strong>Interactive Business Cards:</strong> Go beyond a name and number. Add a QR code to your business card that links to your online portfolio, a personal introduction video, or your LinkedIn profile.</li>
-            </ul>
-        </section>
+        <!-- All Blog Post Pages here... -->
+        <section id="blog-post-1" class="page-section py-16 content-section max-w-3xl mx-auto"><a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a><h2 class="text-center">5 Creative Ways to Use QR Codes for Your Small Business</h2><p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p><img src="https://placehold.co/800x400/6366f1/ffffff?text=Business+Strategy" alt="Business strategy visuals" class="rounded-lg mb-8"><p>QR codes are more than just a link to your website. They are a powerful bridge between the physical and digital worlds. Here are five creative ways your small business can use them to engage customers and boost sales.</p><ul><li><strong>Link to a Video Tutorial:</strong> On product packaging, add a QR code that links to a video showing how to use or assemble the product. This adds immense value and reduces customer support queries.</li><li><strong>Exclusive Discounts:</strong> Place a QR code on your flyers or in-store signage that offers a special discount. This rewards customers for their visit and encourages immediate purchases.</li><li><strong>Gather Feedback:</strong> Put a QR code on receipts that links to a simple feedback form. Offer a small incentive, like 10% off their next purchase, for completing the survey.</li><li><strong>Wi-Fi Access:</strong> If you run a café, restaurant, or any place with a waiting area, a QR code that grants instant Wi-Fi access is a huge convenience for your customers.</li><li><strong>Interactive Business Cards:</strong> Go beyond a name and number. Add a QR code to your business card that links to your online portfolio, a personal introduction video, or your LinkedIn profile.</li></ul></section>
+        <section id="blog-post-2" class="page-section py-16 content-section max-w-3xl mx-auto"><a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a><h2 class="text-center">Static vs. Dynamic QR Codes: Which One Do You Need?</h2><p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p><img src="https://placehold.co/800x400/ec4899/ffffff?text=Technology+Choice" alt="Technology choice visuals" class="rounded-lg mb-8"><p>Not all QR codes are created equal. Understanding the difference between static and dynamic QR codes is essential for choosing the right tool for your needs.</p><h3>Static QR Codes</h3><p>A static QR code has the destination data encoded directly into the pattern. This means once it's generated, the information cannot be changed. Our <a href="#home" class="nav-trigger text-indigo-600 dark:text-indigo-400">generator</a> creates static QR codes.</p><ul><li><strong>Best for:</strong> Permanent information like your website URL, Wi-Fi passwords, or contact details on a business card.</li><li><strong>Pros:</strong> They are free, never expire, and don't require any ongoing management.</li><li><strong>Cons:</strong> You cannot edit the destination link or track scan analytics. If your website URL changes, you need to generate a new QR code.</li></ul><h3>Dynamic QR Codes</h3><p>A dynamic QR code contains a short redirection URL that points to the final destination. This allows you to edit the destination link at any time without changing the QR code itself. These usually require a paid subscription service.</p><ul><li><strong>Best for:</strong> Marketing campaigns, event promotions, or any situation where the linked content might change.</li><li><strong>Pros:</strong> You can update the destination URL, track the number of scans, see the location of scanners, and more.</li><li><strong>Cons:</strong> They rely on a third-party service and often require a subscription fee to maintain functionality.</li></ul><p><strong>The bottom line:</strong> For most everyday uses, a free, reliable static QR code is all you need. For advanced marketing campaigns where tracking and flexibility are key, a dynamic QR code service is worth considering.</p></section>
+        <section id="blog-post-3" class="page-section py-16 content-section max-w-3xl mx-auto"><a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a><h2 class="text-center">How to Add a QR Code to Your Wedding Invitations</h2><p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p><img src="https://placehold.co/800x400/f87171/ffffff?text=Wedding+Details" alt="Wedding invitation with floral design" class="rounded-lg mb-8"><p>Make it easy for your guests to access all your wedding information by adding a simple, elegant QR code to your invitations. It's a modern touch that saves space and streamlines communication.</p><h3>Step 1: Create a Central Hub</h3><p>Before making the QR code, you need a single webpage to direct your guests to. This could be a free wedding website from services like The Knot or Zola, or even a simple, unlisted page on a personal blog. This page should contain all the key details:</p><ul><li>Your full wedding day schedule.</li><li>A link to your online RSVP form (e.g., a Google Form).</li><li>Links to your gift registries.</li><li>Maps and directions to the venue(s).</li><li>Hotel and accommodation suggestions.</li></ul><h3>Step 2: Generate Your QR Code</h3><p>Copy the URL of your wedding website. Paste it into the text field on our <a href="#home" class="nav-trigger text-indigo-600 dark:text-indigo-400">homepage</a> and click "Generate QR Code".</p><h3>Step 3: Download and Add to Your Design</h3><p>Download the high-quality PNG of your QR code. You can then provide this file to your invitation designer or import it into your own design on platforms like Canva. Place it discreetly on the back of the invitation or on a separate details card. A small heading like "Scan for details" is all you need.</p></section>
+        <section id="blog-post-4" class="page-section py-16 content-section max-w-3xl mx-auto"><a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a><h2 class="text-center">QR Codes for Restaurants: A Guide to Contactless Menus</h2><p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p><img src="https://placehold.co/800x400/fbbf24/ffffff?text=Contactless+Menu" alt="Smartphone scanning a QR code menu at a restaurant" class="rounded-lg mb-8"><p>Contactless menus are here to stay. They are hygienic, easy to update, and cost-effective. Here’s how your restaurant can implement them in minutes.</p><h3>Step 1: Create Your Digital Menu</h3><p>First, you need a digital version of your menu. The simplest way is to create a well-formatted PDF. For a better mobile experience, create a simple, responsive webpage. This ensures the text is always easy to read on any device. You can host this page on your existing restaurant website.</p><h3>Step 2: Generate a QR Code for Your Menu URL</h3><p>Once your digital menu is live, copy its URL. Paste that link into our <a href="#home" class="nav-trigger text-indigo-600 dark:text-indigo-400">QR code generator</a> to create your menu code.</p><h3>Step 3: Print and Display</h3><p>Download the QR code and print it. Place it in visible locations throughout your restaurant. Good options include:</p><ul><li>On small, durable table tents for each table.</li><li>As a sticker on the corner of the table.</li><li>In a small frame at the host stand.</li></ul><p>By using a QR code menu, you can easily update prices or add seasonal specials without having to reprint hundreds of physical menus, saving you time and money.</p></section>
+        <section id="blog-post-5" class="page-section py-16 content-section max-w-3xl mx-auto"><a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a><h2 class="text-center">Are QR Codes Safe? How to Spot a Malicious Code</h2><p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p><img src="https://placehold.co/800x400/34d399/ffffff?text=Digital+Security" alt="A shield protecting a QR code" class="rounded-lg mb-8"><p>While incredibly useful, QR codes can sometimes be used for malicious purposes, a practice known as "quishing" (QR phishing). Here’s how to stay safe.</p><h3>How Scams Work</h3><p>Scammers can place a sticker of a malicious QR code over a legitimate one in a public place, like on a parking meter or a restaurant menu. When you scan it, it might take you to a fake website that looks real and asks for your login credentials or payment information.</p><h3>How to Protect Yourself</h3><ul><li><strong>Check for Tampering:</strong> Before you scan a QR code in public, physically inspect it. Does it look like a sticker placed on top of another image? If so, be cautious.</li><li><strong>Preview the URL:</strong> Most modern phone cameras will show you a preview of the URL before you open it. Read it carefully. Does it look like the official website? Watch for subtle misspellings (e.g., "PayPa1.com" instead of "PayPal.com").</li><li><strong>Don't Download Apps:</strong> If a QR code immediately prompts you to download an app, be very suspicious. Only download apps from official app stores.</li><li><strong>Never Enter Passwords After Scanning:</strong> Be wary of any QR code that takes you directly to a login page. It's safer to navigate to the website manually in your browser and log in there.</li></ul><p>By being vigilant and questioning unexpected QR codes, you can safely enjoy the convenience they offer.</p></section>
         
-        <!-- PAGE: Blog Post 2 -->
-        <section id="blog-post-2" class="page-section py-16 content-section max-w-3xl mx-auto">
-             <a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a>
-            <h2 class="text-center">Static vs. Dynamic QR Codes: Which One Do You Need?</h2>
-            <p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p>
-            <img src="https://placehold.co/800x400/ec4899/ffffff?text=Technology+Choice" alt="Technology choice visuals" class="rounded-lg mb-8">
-            <p>Not all QR codes are created equal. Understanding the difference between static and dynamic QR codes is essential for choosing the right tool for your needs.</p>
-            <h3>Static QR Codes</h3>
-            <p>A static QR code has the destination data encoded directly into the pattern. This means once it's generated, the information cannot be changed. Our <a href="#home" class="nav-trigger text-indigo-600 dark:text-indigo-400">generator</a> creates static QR codes.</p>
-            <ul>
-                <li><strong>Best for:</strong> Permanent information like your website URL, Wi-Fi passwords, or contact details on a business card.</li>
-                <li><strong>Pros:</strong> They are free, never expire, and don't require any ongoing management.</li>
-                <li><strong>Cons:</strong> You cannot edit the destination link or track scan analytics. If your website URL changes, you need to generate a new QR code.</li>
-            </ul>
-            <h3>Dynamic QR Codes</h3>
-            <p>A dynamic QR code contains a short redirection URL that points to the final destination. This allows you to edit the destination link at any time without changing the QR code itself. These usually require a paid subscription service.</p>
-            <ul>
-                <li><strong>Best for:</strong> Marketing campaigns, event promotions, or any situation where the linked content might change.</li>
-                <li><strong>Pros:</strong> You can update the destination URL, track the number of scans, see the location of scanners, and more.</li>
-                <li><strong>Cons:</strong> They rely on a third-party service and often require a subscription fee to maintain functionality.</li>
-            </ul>
-            <p><strong>The bottom line:</strong> For most everyday uses, a free, reliable static QR code is all you need. For advanced marketing campaigns where tracking and flexibility are key, a dynamic QR code service is worth considering.</p>
-        </section>
-
-        <!-- PAGE: Blog Post 3 -->
-        <section id="blog-post-3" class="page-section py-16 content-section max-w-3xl mx-auto">
-            <a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a>
-            <h2 class="text-center">How to Add a QR Code to Your Wedding Invitations</h2>
-            <p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p>
-            <img src="https://placehold.co/800x400/f87171/ffffff?text=Wedding+Details" alt="Wedding invitation with floral design" class="rounded-lg mb-8">
-            <p>Make it easy for your guests to access all your wedding information by adding a simple, elegant QR code to your invitations. It's a modern touch that saves space and streamlines communication.</p>
-            <h3>Step 1: Create a Central Hub</h3>
-            <p>Before making the QR code, you need a single webpage to direct your guests to. This could be a free wedding website from services like The Knot or Zola, or even a simple, unlisted page on a personal blog. This page should contain all the key details:</p>
-            <ul>
-                <li>Your full wedding day schedule.</li>
-                <li>A link to your online RSVP form (e.g., a Google Form).</li>
-                <li>Links to your gift registries.</li>
-                <li>Maps and directions to the venue(s).</li>
-                <li>Hotel and accommodation suggestions.</li>
-            </ul>
-            <h3>Step 2: Generate Your QR Code</h3>
-            <p>Copy the URL of your wedding website. Paste it into the text field on our <a href="#home" class="nav-trigger text-indigo-600 dark:text-indigo-400">homepage</a> and click "Generate QR Code".</p>
-            <h3>Step 3: Download and Add to Your Design</h3>
-            <p>Download the high-quality PNG of your QR code. You can then provide this file to your invitation designer or import it into your own design on platforms like Canva. Place it discreetly on the back of the invitation or on a separate details card. A small heading like "Scan for details" is all you need.</p>
-        </section>
-
-        <!-- PAGE: Blog Post 4 -->
-        <section id="blog-post-4" class="page-section py-16 content-section max-w-3xl mx-auto">
-            <a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a>
-            <h2 class="text-center">QR Codes for Restaurants: A Guide to Contactless Menus</h2>
-            <p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p>
-            <img src="https://placehold.co/800x400/fbbf24/ffffff?text=Contactless+Menu" alt="Smartphone scanning a QR code menu at a restaurant" class="rounded-lg mb-8">
-            <p>Contactless menus are here to stay. They are hygienic, easy to update, and cost-effective. Here’s how your restaurant can implement them in minutes.</p>
-            <h3>Step 1: Create Your Digital Menu</h3>
-            <p>First, you need a digital version of your menu. The simplest way is to create a well-formatted PDF. For a better mobile experience, create a simple, responsive webpage. This ensures the text is always easy to read on any device. You can host this page on your existing restaurant website.</p>
-            <h3>Step 2: Generate a QR Code for Your Menu URL</h3>
-            <p>Once your digital menu is live, copy its URL. Paste that link into our <a href="#home" class="nav-trigger text-indigo-600 dark:text-indigo-400">QR code generator</a> to create your menu code.</p>
-            <h3>Step 3: Print and Display</h3>
-            <p>Download the QR code and print it. Place it in visible locations throughout your restaurant. Good options include:</p>
-            <ul>
-                <li>On small, durable table tents for each table.</li>
-                <li>As a sticker on the corner of the table.</li>
-                <li>In a small frame at the host stand.</li>
-            </ul>
-            <p>By using a QR code menu, you can easily update prices or add seasonal specials without having to reprint hundreds of physical menus, saving you time and money.</p>
-        </section>
-
-        <!-- PAGE: Blog Post 5 -->
-        <section id="blog-post-5" class="page-section py-16 content-section max-w-3xl mx-auto">
-            <a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a>
-            <h2 class="text-center">Are QR Codes Safe? How to Spot a Malicious Code</h2>
-            <p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p>
-            <img src="https://placehold.co/800x400/34d399/ffffff?text=Digital+Security" alt="A shield protecting a QR code" class="rounded-lg mb-8">
-            <p>While incredibly useful, QR codes can sometimes be used for malicious purposes, a practice known as "quishing" (QR phishing). Here’s how to stay safe.</p>
-            <h3>How Scams Work</h3>
-            <p>Scammers can place a sticker of a malicious QR code over a legitimate one in a public place, like on a parking meter or a restaurant menu. When you scan it, it might take you to a fake website that looks real and asks for your login credentials or payment information.</p>
-            <h3>How to Protect Yourself</h3>
-            <ul>
-                <li><strong>Check for Tampering:</strong> Before you scan a QR code in public, physically inspect it. Does it look like a sticker placed on top of another image? If so, be cautious.</li>
-                <li><strong>Preview the URL:</strong> Most modern phone cameras will show you a preview of the URL before you open it. Read it carefully. Does it look like the official website? Watch for subtle misspellings (e.g., "PayPa1.com" instead of "PayPal.com").</li>
-                <li><strong>Don't Download Apps:</strong> If a QR code immediately prompts you to download an app, be very suspicious. Only download apps from official app stores.</li>
-                <li><strong>Never Enter Passwords After Scanning:</strong> Be wary of any QR code that takes you directly to a login page. It's safer to navigate to the website manually in your browser and log in there.</li>
-            </ul>
-            <p>By being vigilant and questioning unexpected QR codes, you can safely enjoy the convenience they offer.</p>
-        </section>
-
         <!-- PAGE: FAQ -->
         <section id="faq" class="page-section py-16 content-section max-w-3xl mx-auto">
             <h2>Frequently Asked Questions</h2>
             <div class="space-y-4">
-                <details class="faq-item bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+                <details class="faq-item bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm p-2 rounded-lg shadow-lg">
                     <summary>Are the QR codes free to use?<span class="faq-icon text-indigo-500 ml-auto">+</span></summary>
                     <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-2"><p>Yes, all QR codes generated on this site are completely free for both personal and commercial use.</p></div>
                 </details>
-                <details class="faq-item bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+                <details class="faq-item bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm p-2 rounded-lg shadow-lg">
                     <summary>Do the QR codes expire?<span class="faq-icon text-indigo-500 ml-auto">+</span></summary>
                     <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-2"><p>No, the static QR codes you create here do not expire. They will work as long as the data they point to (like a website URL) is still active.</p></div>
                 </details>
-                <details class="faq-item bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+                <details class="faq-item bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm p-2 rounded-lg shadow-lg">
                     <summary>What information can I store in a QR code?<span class="faq-icon text-indigo-500 ml-auto">+</span></summary>
                     <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-2"><p>You can store a wide variety of information, including website URLs, plain text, phone numbers, SMS messages, email addresses, contact information (vCard), and Wi-Fi network credentials.</p></div>
                 </details>
-                <details class="faq-item bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+                <details class="faq-item bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm p-2 rounded-lg shadow-lg">
                     <summary>How do I scan a QR code?<span class="faq-icon text-indigo-500 ml-auto">+</span></summary>
                     <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-2"><p>Most modern smartphones can scan QR codes using their built-in camera app. Simply open the camera, point it at the QR code, and a notification will pop up with the link or information. If that doesn't work, you may need to download a free QR scanner app from your device's app store.</p></div>
                 </details>
@@ -346,14 +276,14 @@
     </main>
     
     <!-- Footer -->
-    <footer class="bg-white dark:bg-gray-800 py-10 mt-16 border-t border-gray-200 dark:border-gray-700">
+    <footer class="bg-white/70 dark:bg-gray-900/70 py-10 mt-16 border-t border-gray-200 dark:border-gray-700">
         <div class="container mx-auto text-center text-gray-500 dark:text-gray-400">
             <div class="space-x-6 mb-4">
                 <a href="#about" class="footer-link nav-trigger">About</a>
                 <a href="#contact" class="footer-link nav-trigger">Contact</a>
                 <a href="#privacy" class="footer-link nav-trigger">Privacy Policy</a>
             </div>
-            <p>&copy; 2025 FreeQRCodeMaker.com. All Rights Reserved.</p>
+            <p>&copy; 2025 FreeQRCodeMaker All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -376,6 +306,18 @@
             const navLinks = document.querySelectorAll('.nav-link');
             const pageSections = document.querySelectorAll('.page-section');
             const navTriggers = document.querySelectorAll('.nav-trigger');
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOpenIcon = document.getElementById('menu-open-icon');
+            const menuCloseIcon = document.getElementById('menu-close-icon');
+
+            // --- Mobile Menu Logic ---
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                menuOpenIcon.classList.toggle('hidden');
+                menuCloseIcon.classList.toggle('hidden');
+            });
 
             // --- Page Navigation Logic ---
             const showPage = (pageId) => {
@@ -389,6 +331,13 @@
                     link.classList.toggle('active', link.getAttribute('href') === `#${cleanPageId}`);
                 });
                 window.scrollTo(0, 0);
+
+                // Close mobile menu after navigation
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuOpenIcon.classList.remove('hidden');
+                    menuCloseIcon.classList.add('hidden');
+                }
             };
 
             navTriggers.forEach(trigger => {
