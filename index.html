@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Free QR Code Generator - Create Custom QR Codes Instantly</title>
+    <meta name="description" content="Create high-quality, custom QR codes for free. Instantly generate QR codes for URLs, text, contact info, and more. Easy to use, no sign-up required. Download as PNG or share directly.">
+    <link rel="canonical" href="https://weblifysolutions.netlify.app/">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Free QR Code Generator - Create Custom QR Codes Instantly">
+    <meta property="og:description" content="Instantly generate QR codes for URLs, text, and more. Easy, free, and no sign-up required.">
+    <meta property="og:image" content="https://weblifysolutions.netlify.app/og-image.png">
+    <meta property="og:url" content="https://weblifysolutions.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .dark body { background-color: #111827; }
+        
+        /* Page transition styles */
+        .page-section { display: none; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* General UI enhancements */
+        .nav-link { @apply text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200; }
+        .nav-link.active { @apply text-indigo-600 dark:text-indigo-400 font-semibold; }
+        .content-section h2 { @apply text-3xl md:text-4xl font-bold text-gray-800 dark:text-white text-center mb-12; }
+        .content-section h3 { @apply text-2xl font-semibold text-gray-800 dark:text-white mt-6 mb-3; }
+        .content-section p { @apply text-gray-600 dark:text-gray-400 leading-relaxed mb-4; }
+        .content-section ul { @apply list-disc list-inside text-gray-600 dark:text-gray-400 leading-relaxed mb-4 space-y-2; }
+        .content-section strong { @apply font-semibold text-gray-900 dark:text-white; }
+        
+        /* Blog card styles */
+        .blog-card { @apply bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden transform hover:-translate-y-2 transition-all duration-300; }
+        .blog-card img { @apply w-full h-48 object-cover; }
+
+        /* FAQ Accordion styles */
+        .faq-item summary { @apply flex justify-between items-center font-semibold cursor-pointer p-4; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-icon { transition: transform 0.3s ease; }
+        .faq-item[open] .faq-icon { transform: rotate(45deg); }
+
+        /* Back to top button */
+        #back-to-top { @apply fixed bottom-5 right-5 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:bg-indigo-700 transition-all duration-300 opacity-0 invisible; }
+        #back-to-top.visible { @apply opacity-100 visible; }
+    </style>
+
+    <!-- SEO Schemas -->
+    <script type="application/ld+json">{ "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "QR Code Generator", "operatingSystem": "Web", "applicationCategory": "Utilities", "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "250" }, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }, "description": "A free, web-based tool to generate custom QR codes instantly for URLs, text, and other data.", "url": "https://weblifysolutions.netlify.app/" }</script>
+    <script type="application/ld+json">{ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{ "@type": "Question", "name": "Are the QR codes free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, all QR codes generated on this site are completely free for both personal and commercial use." } },{ "@type": "Question", "name": "Do the QR codes expire?", "acceptedAnswer": { "@type": "Answer", "text": "No, the static QR codes you create here do not expire. They will work as long as the data they point to (like a website URL) is still active." } }] }</script>
+    <script type="application/ld+json">{ "@context": "https://schema.org", "@type": "Blog", "@id": "https://weblifysolutions.netlify.app/#blog"}</script>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 dark:bg-gray-800/80 shadow-sm fixed w-full top-0 z-50 backdrop-blur-sm">
+        <nav class="container mx-auto px-4 lg:px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="nav-trigger text-2xl font-bold text-indigo-600 dark:text-indigo-400">QR Gen</a>
+            <div class="space-x-4 lg:space-x-6">
+                <a href="#home" class="nav-link nav-trigger">Home</a>
+                <a href="#blog" class="nav-link nav-trigger">Blog</a>
+                <a href="#faq" class="nav-link nav-trigger">FAQ</a>
+                <a href="#about" class="nav-link nav-trigger">About</a>
+                <a href="#contact" class="nav-link nav-trigger">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-4 pt-24">
+        
+        <!-- PAGE: Home / Generator Tool -->
+        <section id="home" class="page-section">
+            <div class="flex items-center justify-center py-8">
+                <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 space-y-6">
+                    <div class="text-center">
+                        <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Free QR Code Generator</h1>
+                        <p class="text-gray-500 dark:text-gray-400 mt-2">Enter text or a URL to create your QR code instantly.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="qr-text" class="text-sm font-medium text-gray-700 dark:text-gray-300">Your Text or URL</label>
+                            <input type="text" id="qr-text" class="mt-1 block w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        </div>
+                        <button id="generate-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">Generate QR Code</button>
+                    </div>
+                    <div id="qrcode-container" class="hidden flex flex-col items-center justify-center space-y-4 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+                         <div id="qrcode-display" class="p-4 bg-white rounded-lg shadow-inner"></div>
+                         <p id="qrcode-message" class="text-sm text-green-600 dark:text-green-400 font-medium">QR Code Generated!</p>
+                         <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+                             <a id="download-btn" class="w-full text-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 cursor-pointer">Download PNG</a>
+                             <button id="share-btn" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer hidden">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"></path></svg>Share
+                             </button>
+                         </div>
+                    </div>
+                    <div id="error-message" class="hidden text-center p-3 bg-red-100 dark:bg-red-800/50 rounded-lg"><p class="text-sm text-red-600 dark:text-red-300">Please enter some text or a URL.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: Blog Index -->
+        <section id="blog" class="page-section py-16 content-section">
+            <h2>Our Blog</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Blog Card 1 -->
+                <div class="blog-card">
+                    <img src="https://placehold.co/600x400/6366f1/ffffff?text=Business" alt="Business graph with upward trend">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">5 Creative Ways to Use QR Codes for Your Small Business</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Discover innovative ways to leverage QR codes to boost marketing, engagement, and sales.</p>
+                        <a href="#blog-post-1" class="nav-trigger font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Read More →</a>
+                    </div>
+                </div>
+                <!-- Blog Card 2 -->
+                <div class="blog-card">
+                    <img src="https://placehold.co/600x400/ec4899/ffffff?text=Tech" alt="Abstract representation of static vs dynamic">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Static vs. Dynamic QR Codes: Which One Do You Need?</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Understand the key differences to choose the right type of QR code for your project.</p>
+                        <a href="#blog-post-2" class="nav-trigger font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: Blog Post 1 -->
+        <section id="blog-post-1" class="page-section py-16 content-section max-w-3xl mx-auto">
+            <a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a>
+            <h2 class="text-center">5 Creative Ways to Use QR Codes for Your Small Business</h2>
+            <p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p>
+            <img src="https://placehold.co/800x400/6366f1/ffffff?text=Business+Strategy" alt="Business strategy visuals" class="rounded-lg mb-8">
+            <p>QR codes are more than just a link to your website. They are a powerful bridge between the physical and digital worlds. Here are five creative ways your small business can use them to engage customers and boost sales.</p>
+            <ul>
+                <li><strong>Link to a Video Tutorial:</strong> On product packaging, add a QR code that links to a video showing how to use or assemble the product. This adds immense value and reduces customer support queries.</li>
+                <li><strong>Exclusive Discounts:</strong> Place a QR code on your flyers or in-store signage that offers a special discount. This rewards customers for their visit and encourages immediate purchases.</li>
+                <li><strong>Gather Feedback:</strong> Put a QR code on receipts that links to a simple feedback form. Offer a small incentive, like 10% off their next purchase, for completing the survey.</li>
+                <li><strong>Wi-Fi Access:</strong> If you run a café, restaurant, or any place with a waiting area, a QR code that grants instant Wi-Fi access is a huge convenience for your customers.</li>
+                <li><strong>Interactive Business Cards:</strong> Go beyond a name and number. Add a QR code to your business card that links to your online portfolio, a personal introduction video, or your LinkedIn profile.</li>
+            </ul>
+        </section>
+        
+        <!-- PAGE: Blog Post 2 -->
+        <section id="blog-post-2" class="page-section py-16 content-section max-w-3xl mx-auto">
+             <a href="#blog" class="nav-trigger text-indigo-600 dark:text-indigo-400 hover:underline mb-8 inline-block">← Back to Blog</a>
+            <h2 class="text-center">Static vs. Dynamic QR Codes: Which One Do You Need?</h2>
+            <p class="text-sm text-gray-500 text-center -mt-8 mb-8">Published on August 8, 2025</p>
+            <img src="https://placehold.co/800x400/ec4899/ffffff?text=Technology+Choice" alt="Technology choice visuals" class="rounded-lg mb-8">
+            <p>Not all QR codes are created equal. Understanding the difference between static and dynamic QR codes is essential for choosing the right tool for your needs.</p>
+            <h3>Static QR Codes</h3>
+            <p>A static QR code has the destination data encoded directly into the pattern. This means once it's generated, the information cannot be changed. Our <a href="#home" class="nav-trigger text-indigo-600 dark:text-indigo-400">generator</a> creates static QR codes.</p>
+            <ul>
+                <li><strong>Best for:</strong> Permanent information like your website URL, Wi-Fi passwords, or contact details on a business card.</li>
+                <li><strong>Pros:</strong> They are free, never expire, and don't require any ongoing management.</li>
+                <li><strong>Cons:</strong> You cannot edit the destination link or track scan analytics. If your website URL changes, you need to generate a new QR code.</li>
+            </ul>
+            <h3>Dynamic QR Codes</h3>
+            <p>A dynamic QR code contains a short redirection URL that points to the final destination. This allows you to edit the destination link at any time without changing the QR code itself. These usually require a paid subscription service.</p>
+            <ul>
+                <li><strong>Best for:</strong> Marketing campaigns, event promotions, or any situation where the linked content might change.</li>
+                <li><strong>Pros:</strong> You can update the destination URL, track the number of scans, see the location of scanners, and more.</li>
+                <li><strong>Cons:</strong> They rely on a third-party service and often require a subscription fee to maintain functionality.</li>
+            </ul>
+            <p><strong>The bottom line:</strong> For most everyday uses, a free, reliable static QR code is all you need. For advanced marketing campaigns where tracking and flexibility are key, a dynamic QR code service is worth considering.</p>
+        </section>
+
+        <!-- PAGE: FAQ -->
+        <section id="faq" class="page-section py-16 content-section max-w-3xl mx-auto">
+            <h2>Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <details class="faq-item bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+                    <summary>Are the QR codes free to use?<span class="faq-icon text-indigo-500 ml-auto">+</span></summary>
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-2"><p>Yes, all QR codes generated on this site are completely free for both personal and commercial use.</p></div>
+                </details>
+                <details class="faq-item bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+                    <summary>Do the QR codes expire?<span class="faq-icon text-indigo-500 ml-auto">+</span></summary>
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-2"><p>No, the static QR codes you create here do not expire. They will work as long as the data they point to (like a website URL) is still active.</p></div>
+                </details>
+                <details class="faq-item bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+                    <summary>What information can I store in a QR code?<span class="faq-icon text-indigo-500 ml-auto">+</span></summary>
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-2"><p>You can store a wide variety of information, including website URLs, plain text, phone numbers, SMS messages, email addresses, contact information (vCard), and Wi-Fi network credentials.</p></div>
+                </details>
+                <details class="faq-item bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+                    <summary>How do I scan a QR code?<span class="faq-icon text-indigo-500 ml-auto">+</span></summary>
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-2"><p>Most modern smartphones can scan QR codes using their built-in camera app. Simply open the camera, point it at the QR code, and a notification will pop up with the link or information. If that doesn't work, you may need to download a free QR scanner app from your device's app store.</p></div>
+                </details>
+            </div>
+        </section>
+
+        <!-- PAGE: About -->
+        <section id="about" class="page-section py-16 content-section max-w-3xl mx-auto">
+            <h2 class="text-center">About Our Free QR Code Generator</h2>
+            <p><strong>QR Gen</strong> is a simple, free tool designed to make QR code generation accessible to everyone. Our mission is to provide a fast, reliable, and easy-to-use service for creating high-quality QR codes for any purpose. Whether you're a small business owner, a marketer, or just someone looking to share information quickly, we're here to help. This tool was built with modern web technologies to ensure it's fast and secure, processing all data directly in your browser.</p>
+        </section>
+
+        <!-- PAGE: Contact -->
+        <section id="contact" class="page-section py-16 content-section max-w-3xl mx-auto">
+            <h2 class="text-center">Contact Us</h2>
+            <p class="text-center">Have questions or feedback? We'd love to hear from you. Please reach out to us at:<br><strong>Email:</strong> <a href="mailto:your-email@example.com" class="text-indigo-600 dark:text-indigo-400">your-email@example.com</a></p>
+        </section>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 py-10 mt-16 border-t border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto text-center text-gray-500 dark:text-gray-400">
+            <div class="space-x-6 mb-4">
+                <a href="#about" class="footer-link nav-trigger">About</a>
+                <a href="#contact" class="footer-link nav-trigger">Contact</a>
+                <a href="privacy.html" class="footer-link">Privacy Policy</a> <!-- Assuming privacy is a separate file for AdSense -->
+            </div>
+            <p>&copy; 2025 QR Gen. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const qrTextInput = document.getElementById('qr-text');
+            const generateBtn = document.getElementById('generate-btn');
+            const qrCodeContainer = document.getElementById('qrcode-container');
+            const qrCodeDisplay = document.getElementById('qrcode-display');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const errorMessage = document.getElementById('error-message');
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pageSections = document.querySelectorAll('.page-section');
+            const navTriggers = document.querySelectorAll('.nav-trigger');
+
+            // --- Page Navigation Logic ---
+            const showPage = (pageId) => {
+                // Remove '#' from id
+                const cleanPageId = pageId.startsWith('#') ? pageId.substring(1) : pageId;
+                
+                pageSections.forEach(section => {
+                    section.style.display = section.id === cleanPageId ? 'block' : 'none';
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${cleanPageId}`);
+                });
+                window.scrollTo(0, 0);
+            };
+
+            navTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = trigger.getAttribute('href');
+                    history.pushState(null, '', pageId); // Update URL without reloading
+                    showPage(pageId);
+                });
+            });
+
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', () => {
+                const pageId = window.location.hash || '#home';
+                showPage(pageId);
+            });
+
+            // Show initial page based on URL hash
+            const initialPage = window.location.hash || '#home';
+            showPage(initialPage);
+
+            // --- QR Code Generator Logic ---
+            const generateQRCode = () => {
+                const text = qrTextInput.value.trim();
+                if (!text) {
+                    errorMessage.classList.remove('hidden');
+                    qrCodeContainer.classList.add('hidden');
+                    return;
+                }
+                errorMessage.classList.add('hidden');
+                qrCodeDisplay.innerHTML = '';
+                try {
+                    QRCode.toCanvas(document.createElement('canvas'), text, { width: 256, errorCorrectionLevel: 'H', margin: 1 }, (error, canvas) => {
+                        if (error) throw error;
+                        qrCodeDisplay.appendChild(canvas);
+                        qrCodeContainer.classList.remove('hidden');
+                        if (navigator.share) shareBtn.classList.remove('hidden');
+                    });
+                } catch (err) {
+                    console.error(err);
+                    errorMessage.textContent = 'An unexpected error occurred.';
+                    errorMessage.classList.remove('hidden');
+                }
+            };
+
+            const downloadQRCode = () => {
+                const canvas = qrCodeDisplay.querySelector('canvas');
+                if (canvas) {
+                    downloadBtn.href = canvas.toDataURL('image/png');
+                    downloadBtn.download = 'qrcode.png';
+                }
+            };
+
+            const shareQRCode = async () => {
+                const canvas = qrCodeDisplay.querySelector('canvas');
+                if (!canvas) return;
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'qrcode.png', { type: 'image/png' });
+                    const shareData = { files: [file], title: 'My QR Code', text: 'Check out this QR code I generated!' };
+                    try {
+                        if (navigator.canShare && navigator.canShare(shareData)) {
+                            await navigator.share(shareData);
+                        }
+                    } catch (err) {
+                        if (err.name !== 'AbortError') console.error('Share failed:', err);
+                    }
+                }, 'image/png');
+            };
+
+            if(generateBtn) generateBtn.addEventListener('click', generateQRCode);
+            if(downloadBtn) downloadBtn.addEventListener('click', downloadQRCode);
+            if(shareBtn) shareBtn.addEventListener('click', shareQRCode);
+            if(qrTextInput) qrTextInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') generateQRCode(); });
+
+            // --- Back to Top Button Logic ---
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        });
+    </script>
+</body>
+</html>
